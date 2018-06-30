@@ -73,7 +73,7 @@ hashValue
 
 [company]ID*
 companyName*
-location\*
+location*
 address1
 address2
 city
