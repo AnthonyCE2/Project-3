@@ -27,92 +27,95 @@
 
 On the backend, we're going to have 4 MySQL tables: **posts**, **users**, **companyLoc**, **jobs**
 
-  **required fields marked with asterisks**
-  meaning of fields **should** be self-evident.  
-  hashValue is a check sum (or something like that) to detect tamper in tables
+**required fields marked with asterisks**
+meaning of fields **should** be self-evident.  
+ hashValue is a check sum (or something like that) to detect tamper in tables
 
 ## users table
 
-  userID*
-  FirstName*
-  LastName*
-  displayName -- name to display with user post
-  email0*
-  showEmails  -- boolean
-  email1
-  telno
-  showTelno   -- boolean
-  address1
-  address2
-  showStreet  -- boolean
-  city
-  showCity    -- boolean
-  state
-  showState   -- boolean
-  zip
-  showZip     -- boolean
-  password    -- encrypted through passportjs
-  myPosts     -- link to array of posts (however we handle this)
-  preferredLocs -- array, up to five
-  preferredCo   -- array, up to five
-  prejerredJob  -- array, up to five
-  createdAt
-  updatedAt
-  hashValue
+userID*
+FirstName*
+LastName*
+displayName -- name to display with user post
+email0*
+showEmails -- boolean
+email1
+telno
+showTelno -- boolean
+address1
+address2
+showStreet -- boolean
+city
+showCity -- boolean
+state
+showState -- boolean
+zip
+showZip -- boolean
+password -- encrypted through passportjs
+myPosts -- link to array of posts (however we handle this)
+preferredLocs -- array, up to five
+preferredCo -- array, up to five
+prejerredJob -- array, up to five
+createdAt
+updatedAt
+hashValue
 
 ## Jobs table
 
-  [job]ID*
-  jobTitle*
-  jobDescription
-  createdAt
-  updatedAt
-  hashValue
+[job]ID*
+jobTitle*
+jobDescription
+createdAt
+updatedAt
+hashValue
 
 ## companyLoc table
 
-  [company]ID*
-  companyName*
-  location*
-  address1
-  address2
-  city
-  state
-  zipcode
-  createdAt
-  updatedAt
-  hashValue
+[company]ID*
+companyName*
+location\*
+address1
+address2
+city
+state
+zipcode
+createdAt
+updatedAt
+hashValue
 
 ## post table
 
-  [post]ID*
-  userID*
-  companyLocID*
-  jobID*
-  keepAnonymous* -- boolean
-  textOfPost*
-  createdAt
-  updatedAt
-  hashValue
+[post]ID*
+userID*
+companyLocID*
+jobID*
+keepAnonymous* -- boolean
+textOfPost*
+createdAt
+updatedAt
+hashValue
 
 ## routes
 
-  ### index.html
+### index.html
 
     will receive back an array of json objects as follows for each post:
 
-    {
-      postID:         number,
-      displayName:    string,
-      annoymousPost:  boolean,
-      posterID:       number,        // unless poster is anonymous
-      textOfPost:     text,
-      company:        string,
-      location        string,
-      job:            string,
-      createdAt:      yyyymmddhhss,
-      updatedAt:      yyyymmddhhss
-    }
+{
+  postID: number,
+  displayName: string,
+  annoymousPost: boolean,
+  posterID: number,  // 99999 is user is anonymous
+  question: string,
+  explanation: string,
+  company: string,
+  location string,
+  companyLocID: number,
+  job: string,
+  jobID: number,
+  createdAt: yyyymmddhhss,
+  updatedAt: yyyymmddhhss
+}
 
       what posts are returned int the array depends on a state variable "currentHomeView":
 
@@ -120,7 +123,7 @@ On the backend, we're going to have 4 MySQL tables: **posts**, **users**, **comp
         generalUser    (rev chrono flow based on user preferences)
         searchLocation (rev chrono, will maintain or discard )
         searchCompany  
-        searchJob      
+        searchJob
 
     if a user is logged in, should also receive this information:
 
@@ -137,20 +140,21 @@ On the backend, we're going to have 4 MySQL tables: **posts**, **users**, **comp
       userPassword: string
     }
 
-  ### post
+### post
 
     sends:
 
     {
       postID:      number,
       userID:      number,
-      textOfPost:  text,
+      textOfPost:  string,
+      explanation:  string,
       company:     string,
       location     string,
       job:         string
     }
 
-  ### register/profile
+### register/profile
 
     recieves and sends:
 
@@ -178,4 +182,3 @@ On the backend, we're going to have 4 MySQL tables: **posts**, **users**, **comp
       createdAt:   yyyymmddhhss,
       updatedAt:   yyyymmddhhss
     }
-
