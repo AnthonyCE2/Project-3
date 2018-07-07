@@ -1,0 +1,12 @@
+ROUTES
+
+app.get("/") -- will load homepage
+app.get("/about") -- loads about page
+app.get("/login") -- loads login page
+app.get("/contact") -- gets contact page
+app.get("/blogPost/all") -- returns all blogposts in reverse chrono order
+app.get("/blogPost/post/:postID") -- returns *the* post with postID 
+app.get("/blogPost/user/:userID") -- returns *all* posts by userID
+app.get("/blogPost/company/:companyID") -- returns *all* blogosts for a given company at a given location
+app.get("/blogPost/location/:location") -- returns *all* blogposts for a given location
+app.get("/blogPost/companyloc/:companyloc") -- returns *all* posts for a given company

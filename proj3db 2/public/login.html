@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Discussion!</title>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <style>body {font-family: Arial, Helvetica, sans-serif}</style>
+</head>
+<script>
+  $.get('api/home');
+</script>
+
+<body>
+
+    <div id="loginBox">
+      <!-- login form -->
+      
+      <form id="loginForm" name='logIn'>
+          <h2>Login</h2>
+        <input id="userEmail" type="email" placeholder="Your email">
+        <br>
+        <input id="userPassword" type="password" placeholder="Your password">
+        <br>
+        <button id="logInBtn" type="button" label="Log In">
+          <span id="logInBtnTxt">Log In</span>
+        </button>
+      
+      </form>
+      <form id="registerForm" name="register" value="Register">
+        <div id="hideRegisterForm">
+        <h2> Or Register</h2>
+        <input id="displayName" name="displayName" type="email" placeholder="Pick User Name"><br>
+        <input id="email0" name="email0" type="email" placeholder="Your email"><br>
+        <input id="showEmail" name="showEmail" type="checkbox"value="0">Show Email?<br>
+        <input id="userPassword0" name="userPassword0" type="password" placeholder="Create a password"><br>
+        <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password"><br>
+        <input id="email1" name="email1" type="text" name="" placeholder="Alternate Email"><br>
+        <input id="telno" name="telno" type="text" name="" placeholder="Telephone"><br>
+        <input id="showTelno" name="showTelno" type="checkbox" value="0">Show Telephone?<br>
+        <input id="address1" name="address1" type="text" name="" placeholder="Street Address"><br>
+        <input id="adress2" name="adress2" type="text" name="" placeholder="Apt./Suite/etc."><br>
+        <input id="showStreet" name="showStreet" type="checkbox" value="0">Show Street Address?<br>
+        <input id="city" name="city" type="text" name="" placeholder="City"><br>
+        <input id="showCity" name="showCity" type="checkbox" value="0">Show City?<br>
+        <input id="state" name="state" type="text" name="" placeholder="State"><br>
+        <input id="showState" name="showState" type="checkbox" value="0">Show State?<br>
+        <input id="zip" name="zip" type="text" name="" placeholder="Zip"><br>
+        <input id="showZip" name="showZip" type="checkbox" value="0">Show Zip?<br>
+        </div>
+        <button id='registerBtn' type="button" value="register">
+          <span id="registerBtnTxt">Register</span>
+        </button>
+      </form>
+    </div>
+  
+
+  <script type="text/javascript" src="login.js"></script>
+  <script>
+      
+
+    function handleLoginErr(err) {
+      $("#alert .msg").text(err.responseJSON);
+      $("#alert").fadeIn(500);
+    };
+  </script>
+</body>
+
+</html>
