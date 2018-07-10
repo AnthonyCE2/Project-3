@@ -23,6 +23,10 @@
 
   </head>
 
+  <script>
+      $.get('api/home');
+    </script>
+
   <body>
 
     <!-- Navigation -->
@@ -71,18 +75,32 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-          <p>Please login to post content to our blog.</p>
+          <p>Please login or register to post content to our blog.</p>
           <!-- Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. -->
           <!-- WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! -->
           <!-- To use the contact form, your site must be on a live web host with PHP! The form will not work locally! -->
-          <form name="sentMessage" id="contactForm" novalidate>
+          
+          <div id="loginBox">
+            <!-- login form -->
+            
+            <form id="loginForm" name='logIn'>
+              <input id="userEmail" type="email" placeholder="Your email">
+              <br>
+              <input id="userPassword" type="password" placeholder="Your password">
+              <br>
+               <br>
+              <button id="logInBtn" type="submit" label="Log In" class="btn btn-primary">
+                  <span id="logInBtnTxt">Log In</span>
+              </button>
+            
+          <!-- <form name="sentMessage" id="contactForm" novalidate>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Username</label>
                 <input type="text" class="form-control" placeholder="Username" id="username" required data-validation-required-message="Please enter your name.">
                 <p class="help-block text-danger"></p>
               </div>
-            </div>
+            </div> -->
             <!-- <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Email Address</label>
@@ -90,13 +108,13 @@
                 <p class="help-block text-danger"></p>
               </div>
             </div> -->
-            <div class="control-group">
+            <!-- <div class="control-group">
               <div class="form-group col-xs-12 floating-label-form-group controls">
                 <label>Password</label>
                 <input type="tel" class="form-control" placeholder="Password" id="password" required data-validation-required-message="Please enter your phone number.">
                 <p class="help-block text-danger"></p>
               </div>
-            </div>
+            </div> -->
             <!-- <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Message</label>
@@ -104,17 +122,59 @@
                 <p class="help-block text-danger"></p>
               </div>
             </div> -->
-            <br>
-            <div id="success"></div>
+            <!-- <br> -->
+            <!-- <div id="success"></div>
             <div class="form-group">
               <button type="submit" class="btn btn-primary" id="sendMessageButton">Login</button>
-            </div>
+            </div> -->
           </form>
+
+            <hr>
+
+          <form id="registerForm" name="register" value="Register">
+              <div id="hideRegisterForm">
+          
+              <input id="displayName" name="displayName" type="email" placeholder="Select user name"><br>
+              <input id="email0" name="email0" type="email" placeholder="Your email"><br>
+              <input id="showEmail" name="showEmail" type="checkbox"value="0">Show email in post?<br>
+              <br>
+              
+              <input id="userPassword0" name="userPassword0" type="password" placeholder="Create a password"><br>
+              <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password"><br>
+              
+              
+              <!-- <input id="email1" name="email1" type="text" name="" placeholder="Alternate Email"><br>
+              <input id="telno" name="telno" type="text" name="" placeholder="Telephone"><br>
+              <input id="showTelno" name="showTelno" type="checkbox" value="0">Show Telephone?<br>
+              <br>
+              <input id="address1" name="address1" type="text" name="" placeholder="Street Address"><br>
+              <input id="adress2" name="adress2" type="text" name="" placeholder="Apt./Suite/etc."><br>
+              <input id="showStreet" name="showStreet" type="checkbox" value="0">Show Street Address?<br>
+              <input id="city" name="city" type="text" name="" placeholder="City"><br>
+              <input id="showCity" name="showCity" type="checkbox" value="0">Show City?<br>
+              <input id="state" name="state" type="text" name="" placeholder="State"><br>
+              <input id="showState" name="showState" type="checkbox" value="0">Show State?<br>
+              <input id="zip" name="zip" type="text" name="" placeholder="Zip"><br>
+              <input id="showZip" name="showZip" type="checkbox" value="0">Show Zip?<br> -->
+              
+              <br>
+
+            </div>
+              <button id='registerBtn' type="button" value="register" class="btn btn-primary">
+                <span id="registerBtnTxt">Register</span>
+              </button>
+            </form>
+
+
         </div>
       </div>
     </div>
 
-    <hr>
+   
+
+
+
+
 
     <!-- Footer -->
     <footer>
@@ -153,6 +213,18 @@
       </div>
     </footer>
 
+
+    <!-- Script to Link to Database -->
+    <script type="text/javascript" src="login.js"></script>
+    <script>
+        
+  
+      function handleLoginErr(err) {
+        $("#alert .msg").text(err.responseJSON);
+        $("#alert").fadeIn(500);
+      };
+    </script>
+
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -163,6 +235,8 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/clean-blog.min.js"></script>
+
+   
 
   </body>
 
