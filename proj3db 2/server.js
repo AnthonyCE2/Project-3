@@ -14,10 +14,9 @@ var passport = require("./config/passport");
 var path = require("path");
 var env = require("dotenv").load();
 
-
-// Requiring passport as we've configured it
-var passport = require("./config/passport");
-var path = require("path");
+// // Requiring passport as we've configured it
+// var passport = require("./config/passport");
+// var path = require("path");
 
 // set up expree app
 var app = express();
@@ -32,10 +31,6 @@ app.use(express.static("public"));
 
 // Requiring our models for syncing
 var db = require("./models");
-
-// set up body parser for use with express
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 // Static directory
 app.use(express.static("public"));
