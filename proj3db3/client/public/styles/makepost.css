@@ -1,0 +1,23 @@
+/* * {
+  background-color: green;
+} */
+
+form {
+  font-size: 1.5rem;
+}
+
+input[type=text] {
+  display: inline-block;
+  min-height: 1.2em;
+  font-size: 1.5rem;
+  width: 200px;
+  /* border: none; */
+} 
+
+input[type=submit] {
+  font-size: 1.5rem;
+  background-color: blue;
+  color: white;
+  border-radius: 5px;
+  border: 4px white double;
+}
