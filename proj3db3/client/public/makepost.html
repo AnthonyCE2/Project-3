@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/makepost.css">
+</head>
+
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Discussion!</title>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <style>body {font-family: Arial, Helvetica, sans-serif}</style>
+</head>
+<script>
+  $.get('api/home');
+</script>
+
+<body>
+    <div id="loginBox">
+      <!-- login form -->
+      <form id="makePostForm" name="makePostForm" value="Post">
+        <input id="company" name="company" type="text" placeholder="Company"><br>
+        <input id="keepAnonymous" name="keepAnonymous" type="checkbox" value="true">Check to Keep Anonymous<br>
+        <input id="location" name="location" type="text" placeholder="Location"><br>
+        <input id="job" name="job" type="text" placeholder="Position"><br>
+        <input id="textOfPost" name="textOfPost" type="text" placeholder="The Question"><br>
+        <input id="reason" name="reason" type="text" name="reason" placeholder="Advice"><br>
+        <input id='makePostBtn' type="submit" value="Post">
+        </button>
+      </form>
+    </div>
+
+  <script type="text/javascript" src="scripts/makepost.js"></script>
+  <script>
+    function handleLoginErr(err) {
+      $("#alert .msg").text(err.responseJSON);
+      $("#alert").fadeIn(500);
+    };
+  </script>
+</body>
+
+</html>
