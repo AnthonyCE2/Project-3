@@ -4,6 +4,7 @@ import React, {
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types';
 import MenuItems from './menuItems'
+import AllPosts from '../allposts/allposts';
 import $ from 'jquery'
 // import uuid from 'uuid';
 
@@ -17,16 +18,16 @@ class SomeMenus extends Component {
       dataArray: [],
     }
     this.filterSelect = this.filterSelect.bind(this);
-    this.getData = this.getData.bind(this);
+    this.getList = this.getList.bind(this);
     this.setMenu = this.setMenu.bind(this);
   }
 
   // returns uniform data objsect with ID, Name, tableName
-  getData(dataNeeded, cb) {
+  getList(dataNeeded, cb) {
     this.setState({
       dataArray: []
     })
-    // console.log(`Calling getdata(${dataNeeded})`)
+    // console.log(`Calling getList(${dataNeeded})`)
     // console.log(`this should be empty: ${this.state.dataArray}`)
     // switch(this.state.filterby) {
     switch (dataNeeded) {
@@ -142,14 +143,14 @@ class SomeMenus extends Component {
           filterby: 'None'
         }, () => {
           // console.log("this.filterby is ", this.state.filterby);
-          this.getData('None', this.setMenu)
+          this.getList('None', this.setMenu)
         });
         break;
       case 'User':
         this.setState({
           filterby: 'User'
         }, () => {
-          this.getData('User', this.setMenu)
+          this.getList('User', this.setMenu)
         });
         break;
       case 'Company':
@@ -157,35 +158,35 @@ class SomeMenus extends Component {
           filterby: 'Company'
         }, () => {
           console.log("chose company")
-          this.getData('Company', this.setMenu)
+          this.getList('Company', this.setMenu)
         });
         break;
       case 'Location':
         this.setState({
           filterby: 'Location'
         }, () => {
-          this.getData('Location', this.setMenu)
+          this.getList('Location', this.setMenu)
         });
         break;
       case 'Company And Location':
         this.setState({
           filterby: 'Company And Location'
         }, () => {
-          this.getData('Company And Location', this.setMenu)
+          this.getList('Company And Location', this.setMenu)
         });
         break;
       case 'Job':
         this.setState({
           filterby: 'Job'
         }, () => {
-          this.getData('Job', this.setMenu)
+          this.getList('Job', this.setMenu)
         });
         break;
       case 'My Posts':
         this.setState({
           filterby: 'My Posts'
         }, () => {
-          this.getData('My Posts', this.setMenu)
+          this.getList('My Posts', this.setMenu)
         });
         break;
     }
@@ -195,14 +196,15 @@ class SomeMenus extends Component {
     // this.setState({
     //   dataArray: []
     // })
-    this.getData(this.state.filterby)
+    this.getList(this.state.filterby)
   }
 
   componentDidMount() {
     // this.setState({
     //   dataArray: []
     // })
-    this.getData(this.state.filterby);
+    console.log("this.state.filerby is", this.state.filterby)
+    this.getList(this.state.filterby);
   };
 
   setMenu(input) {
@@ -222,7 +224,7 @@ class SomeMenus extends Component {
           <p></p>
           <label>Show All Posts By:&nbsp;&nbsp;</label>
               <select id="filterChoice" ref="filter" onChange={this.filterSelect}>
-                <option value='None'>None</option>
+                <option value='None'>All</option>
                 <option value='Company'>Company</option>
                 <option value='Location'>Location</option>
                 <option value='Company And Location'>Company &amp; Location</option>
@@ -236,7 +238,7 @@ class SomeMenus extends Component {
             <MenuItems source={this.state.dataArray} filterby={this.state.filterby} />
             {/* <MenuItems source={this.state.companies} filterby={this.state.filterby} /> */}
         </div>
-
+        <AllPosts filterby={this.state.filterby}/>
       </div>
     );
   }

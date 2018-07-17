@@ -34,9 +34,9 @@ class App extends Component {
           <MakePostButton loginStatus={true}/>
 
           <SomeMenus />
-          <AllPosts/>
+          <AllPosts />
           {/* <BlogPosts /> */}
-          <OnePost postID={3} />
+          {/* <OnePost postID={3} /> */}
         </div>
       // </Router>
     );
