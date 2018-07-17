@@ -11,10 +11,10 @@ class LoginBox extends Component {
       customer: ''
     }
     this.login = this.login.bind(this)
+    this.logout = this.logout.bind(this)
   }
 
   login(event) {
-
     event.preventDefault();
     console.log("hello jello, in login routing")
     this.setState({
@@ -32,32 +32,21 @@ class LoginBox extends Component {
         //   // window.location.reload();
         console.log("we get here when we succesfuly login");
         $.get("/api/home", function (dataIn) {
-          // console.log(dataIn)
           var theUser = dataIn[0].user;
           if (theUser != '') {
             // logged in ...
+            $("#loginLabel").css("color", "black");
             $("#loginLabel").text("Welcome " + theUser);
             $("#loginForm").hide();
-            $("#registerBtnTxt").text('Log Out');
-            $("#registerBtn").val('logout');
+            $("#registerBtn").text('Log Out');
+            $("#registerBtn").val('Logout');
           } else {
             // not logged in
             $("#loginForm").show();
-            $("#registerBtnTxt").text('Log In');
-            // $("#registerBtn").prop('value', 'login');
+            $("#registerBtn").text('Register');
           }
         })
       })
-      // });
-    }
-
-    function logoutUser() {
-      console.log("in loutout user")
-      $.get("/api/login", x => {
-          $("#loginForm").show();
-          $("#registerBtnTxt").text('Log In');
-        }
-      )
     }
 
     var loginEmail = $("#userName");
@@ -83,7 +72,58 @@ class LoginBox extends Component {
     window.location = window.location.href + "#refresh";
     // // window.location.reload();
 
-    // function updatePage() {
+    
+  };
+
+  logout(event) {
+    event.preventDefault();
+    // console.log(event.target.value);
+    if(event.target.value == 'Register') {
+      window.location.href = "Login.html"
+      // window.location.href = "http://www.google.com"
+    } else if (event.target.value == 'Logout') {
+      $("#loginForm").show();
+      $("#registerBtnTxt").html('Register');
+      $("#loginLabel").text("Sign In Or Register");
+      
+      $.get("/api/loginStatus", function(req, res) {
+        console.log(res);
+      })
+      $.get("/api/logout", (req, res) => {
+        console.log("after calling /api/logout", req, res)
+        
+        $.get("/api/loginStatus", function(req, res) {
+          console.log(res);
+        })
+      })
+      }
+    }
+  
+
+  render() {
+    console.log(this.state);
+    return (
+     <div><h3 id="loginLabel">Sign In Or Register</h3>
+     {/* <form action={this.login} > */}
+     <form onSubmit={this.login} >
+      <div id="loginForm"><input id='userName' type='text' placeholder='user name' />
+      <input id="userpwd" type='password' placeholder='password' />
+      <input type='submit' value='Sign In' /></div>
+     </form>
+     <button id="registerBtn" type='register' value ='Register' label="Register" onClick={evt => (this.logout(evt))}>Click to Register</button>
+     {/* evt => (this.logout(evt)) */}
+     </div>
+
+    );
+  }
+}
+
+export default LoginBox;
+
+
+
+
+// function updatePage() {
     //   $.get("/api/home", function (dataIn) {
     //     var theUser = dataIn[0];
     //     var data = dataIn[1];
@@ -103,23 +143,3 @@ class LoginBox extends Component {
     //     }
     //   });
     // }
-  };
-
-  render() {
-    console.log(this.state);
-    return (
-     <div><h3 id="loginLabel">Sign In Or Register</h3>
-     {/* <form action={this.login} > */}
-     <form onSubmit={this.login} >
-      <div id="loginForm"><input id='userName' type='text' placeholder='user name' />
-      <input id="userpwd" type='password' placeholder='password' />
-      <input type='submit' value='Sign In' /></div>
-     </form>
-     <button id="registerBtnTxt" type='register' value ='Register' label="Register" onclick={this.logoutUser}>Click to Register</button>
-     </div>
-
-    );
-  }
-}
-
-export default LoginBox;

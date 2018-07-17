@@ -287,9 +287,18 @@ module.exports = function (app) {
 
   // log out current user
   app.get("/logout", function (req, res) {
+    console.log("log out api called");
+    $("#registerBtnTxt").text('Register');
     req.logout();
-    res.redirect("/");
+    
+    // res.redirect("/");
+    
+    // res.end();
   });
+
+  app.get("/api/loginStatus", function (req, res) {
+    console.log(req.user);
+  })
 
 
   app.get("/api/user_data", function (req, res) {
