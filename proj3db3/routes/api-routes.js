@@ -54,12 +54,13 @@ module.exports = function (app) {
       res.send(data)
     });
   });
-
+ 
   app.get("/blogPost/user/:ID", function (req, res) {
-    db.postTable.findAll({
-      where: {
-        userID: req.params.ID
-      }
+    db.posts.findAll({
+      include: [{model: db.jobs}, {model: db.users, 
+        where: {
+          displayName: req.params.ID
+        }}, {model: db.companyloc}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -67,10 +68,11 @@ module.exports = function (app) {
   });
 
   app.get("/blogPost/company/:ID", function (req, res) {
-    db.postTable.findAll({
-      where: {
-        companyID: req.params.ID
-      }
+    db.posts.findAll({
+      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
+        where: {
+          companyName: req.params.ID
+        }}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -78,10 +80,11 @@ module.exports = function (app) {
   });
 
   app.get("/blogPost/job/:ID", function (req, res) {
-    db.postTable.findAll({
-      where: {
-        job: req.params.ID
-      }
+    db.posts.findAll({
+      include: [{ model: db.jobs, 
+        where: {
+          jobTitle: req.params.ID
+        }}, {model: db.users}, {model: db.companyloc}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -89,10 +92,11 @@ module.exports = function (app) {
   });
 
   app.get("/blogPost/location/:location", function (req, res) {
-    db.postTable.findAll({
-      where: {
-        location: req.params.location
-      }
+    db.posts.findAll({
+      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
+        where: {
+          location: req.params.location
+        }}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -100,13 +104,14 @@ module.exports = function (app) {
   });
 
   app.get("/blogPost/companyloc/:ID/:location", function (req, res) {
-    db.postTable.findAll({
-      where: {
-        postID: req.params.postID,
-        location: req.params.location
-      }
+    db.posts.findAll({
+      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
+        where: {
+          companyName: req.params.ID,
+          location: req.params.location
+        }}]
     }).then((data) => {
-      // console.log(data);
+      // console.log("data is ", data);
       res.send(data)
     });
   });
@@ -131,7 +136,7 @@ module.exports = function (app) {
     db.sequelize.query("SELECT DISTINCT location FROM companyLoc",
     { type: db.Sequelize.QueryTypes.SELECT })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       res.send(data)
     });
   });
@@ -145,6 +150,8 @@ module.exports = function (app) {
     });
   });
 
+
+  
   app.get("/all/users", function (req, res) {
     db.users.findAll({}).then((data) => {
       res.send(data)
@@ -165,25 +172,38 @@ module.exports = function (app) {
   }
   }
 
+  app.get("/myposts", function (req, res) {
+    db.posts.findAll({
+      where: {
+        email0: req.user.email
+      }
+    }).then((data) => {
+      // console.log(data);
+      res.send(data)
+    });
+  });
+
   app.post("/addpost", function (req, res) {
     var datacompanyID;
-    console.log("in addpost route");
-    console.log("req.body is", req.body);
-    getCompanyInfo(req.body.name, (results) => {
+    var found = 1;
+    // TODO add validation
+    // console.log("in addpost route");
+    // console.log("req.body is", req.body);
+    req.body.keepAnon = req.body.keepAnon ? true : false
+    
+    // console.log("req.body is", req.body, "\n----------");
+    getCompanyInfo(req.body.companyName, req.body.location,  (results) => {
+      // console.log(results)
       if (results.length == 0) {
-        // no such company
-      }
-      for ([key, item] in results) {
-        if (item == req.body.location) {
-          found = key;
-        }
+        found = -1;
       }
       if (found != -1) {
-        datacompanyID = data.companyID
-        db.postTable.create({
+        console.log(results[0].dataValues)
+        datacompanyID = results[0].dataValues.companyID
+        db.posts.create({
           companyID: datacompanyID,
           location: req.body.location,
-          job: req.body.job,
+          jobID: req.body.job,
           textOfPost: req.body.textOfPost,
           reason: req.body.reason
         });
@@ -197,11 +217,12 @@ module.exports = function (app) {
     }
   });
 
-  function getCompanyInfo(name, cb) {
-    console.log("got to function")
+  function getCompanyInfo(name, location, cb) {
+    // console.log("got to function")
     db.companyloc.findAll({
       where: {
-        companyName: name
+        companyName: name,
+        location: location
       }
     }).then(data => {
       // console.log(data);
@@ -220,23 +241,23 @@ module.exports = function (app) {
 
   app.get("/api/companyInfofromName/:name", function (req, res) {
     const name = req.params.name;
-    console.log(req.params.name);
+    // console.log(req.params.name);
     // const companyInfo = getCompanyInfo(name);
     getCompanyInfo(name, (companyInfo) => {
-      console.log("companyInfo is \n", companyInfo)
+      // console.log("companyInfo is \n", companyInfo)
       res.send(companyInfo);
     })
   });
 
   // LOGIN/REGISTRATION RELATED ROUTES ------------------------------------
   app.post("/api/signup", function (req, res) {
-    db.user.create({
+    console.log("in api/signup", req.body)
+    db.users.create({
       email0: req.body.email0,
       password: req.body.password,
       FirstName: req.body.FirstName,
       LastName: req.body.LastName,
       displayName: req.body.displayName,
-      email0: req.body.email0,
       showEmails: req.body.showEmails,
       email1: req.body.email1,
       telno: req.body.telno,
@@ -266,7 +287,7 @@ module.exports = function (app) {
   app.post("/api/login",
     passport.authenticate("local"),
     function (req, res, third) {
-      console.log(req, res, third);
+      // console.log(req, res, third);
       // we never get here when authentication fails.....
       res.redirect('/');
       res.end();
@@ -280,7 +301,7 @@ module.exports = function (app) {
     }),
     function (req, res) {
       res.redirect('/');
-      console.log("okay");
+      // console.log("okay");
       res.end();
     }
   );
@@ -290,9 +311,7 @@ module.exports = function (app) {
     console.log("log out api called");
     $("#registerBtnTxt").text('Register');
     req.logout();
-    
     // res.redirect("/");
-    
     // res.end();
   });
 

@@ -1,0 +1,7 @@
+#warning {
+  color: red !important;
+  background-color: yellow;
+  font-weight: 900;
+  font-size: 2em;
+  display: none
+}

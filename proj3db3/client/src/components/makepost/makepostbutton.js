@@ -7,12 +7,15 @@ class MakePostButton extends Component {
     this.state = {
     }
   }
+  loadPostPage() {
+    window.location.href = "addpost.html"
+  }
 
   render() {
     if (this.props.loginStatus){
     return (
      <div>
-       <button id="makepost" type='makepost' value ='makepost' label="makepost">Make a Post</button>
+       <button id="makepost" onClick={this.loadPostPage}>Make a Post</button>
      </div>
     );} else
     return (
@@ -24,3 +27,7 @@ class MakePostButton extends Component {
 }
 
 export default MakePostButton;
+
+// type='makepost' value ='makepost' label="makepost"type='makepost' value ='makepost' label="makepost"
+
+// onClick={window.location.href = "addpost.html"}

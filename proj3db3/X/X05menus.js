@@ -16,8 +16,7 @@ class SomeMenus extends Component {
       filterChoices: ['None', 'User', 'Company', 'Location', 'Company And Location', 'Job', 'My Posts'],
       filterby: 'None',
       selector: 'None',
-      dataArray: [],
-      trigger: ''
+      dataArray: []
     }
     this.filterSelect = this.filterSelect.bind(this);
     this.getList = this.getList.bind(this);
@@ -34,11 +33,14 @@ class SomeMenus extends Component {
     this.setState({
       dataArray: []
     })
+    // console.log(`Calling getList(${dataNeeded})`)
+    // console.log(`this should be empty: ${this.state.dataArray}`)
+    // switch(this.state.filterby) {
     switch (dataNeeded) {
       case 'None':
         return [];
         this.state.dataArray = [];
-        // console.log("case None -- dataArray is ", this.state.dataArray)
+        console.log("case None -- dataArray is ", this.state.dataArray)
         break;
       case 'User':
         fetch("/all/users").then(result => result.json())
@@ -58,7 +60,7 @@ class SomeMenus extends Component {
       case 'Company':
         fetch('/all/company').then(result => result.json())
           .then(result2 => {
-            // console.log(`result2 is ${JSON.stringify(result2)}`)
+            console.log(`result2 is ${JSON.stringify(result2)}`)
             // result2.forEach(item => {})
             result2.map((item) => {
               let myDataItem = {
@@ -95,7 +97,7 @@ class SomeMenus extends Component {
             result2.map((item) => {
               let myDataItem = {
                 ID: null,
-                name: `${item.companyName} *IN* ${item.location}`,
+                name: `${item.companyName} in ${item.location}`,
                 type: 'Company And Location'
               }
               this.state.dataArray.push(myDataItem);
@@ -198,29 +200,37 @@ class SomeMenus extends Component {
     }
   }
 
+  filterByItem(e) {
+    console.log(e.target)
+    console.log("hi hi hi")
+    console.log($("#secondMenu").val())
+  }
+
   componentWillMount() {
-    console.log("CWM menu.js")
+    // this.setState({
+    //   dataArray: []
+    // })
     this.getList(this.state.filterby)
   }
 
   componentDidMount() {
-    console.log("CDM menu.js")
+    // this.setState({
+    //   dataArray: []
+    // })
+    console.log("this.state.filerby is", this.state.filterby)
     this.getList(this.state.filterby);
   };
 
   setMenu(input) {
-    console.log("forcing updata")
+    // console.log("set menu input is ", input);
+    // // console.log("in set menu this.state.dataArray is ", this.state.dataArray);
+    // console.log(this);
+    // this.setState({dataArray: input})
     this.forceUpdate();
   }
 
   getFilterItem(evt) {  
-    console.log("get filterItem chosen submenu is", evt.target.value)
-    this.setState({selector: evt.target.value}, () => {
-      console.log("this.state.selector is ", this.state.selector);
-      // this.forceUpdate();
-      this.setState({trigger: 'hi'})
-    })
-    
+    console.log("hail mary and evt is ", evt.target.value)
   }
 
   render() {
@@ -230,7 +240,7 @@ class SomeMenus extends Component {
       <div id="someMenus">
         <div>
           <p></p>
-          <label>Filter Posts By:&nbsp;&nbsp;</label>
+          <label>Show All Posts By:&nbsp;&nbsp;</label>
           <select id="filterChoice" ref="filter" onChange={this.filterSelect}>
             <option value='None'>All</option>
             <option value='Company'>Company</option>
@@ -242,9 +252,15 @@ class SomeMenus extends Component {
           </select>
         </div>
         <div id='filterChosen'>
+          {/* <label>Select {this.props.filterby}:&nbsp;&nbsp;</label>
+          <select id="secondMenu" onChange={this.myFunction}> */}
             <MenuItems source={this.state.dataArray} passValueUp={this.getFilterItem}/>
+            {/* <MenuItems source={this.state.dataArray} filterby={this.state.filterby} onChange={this.filterByItem}/> */}
+          {/* </select> */}
+          {/* <button onClick={this.filterByItem}>filter</button> */}
+          {/* <MenuItems source={this.state.companies} filterby={this.state.filterby} /> */}
         </div>
-        <AllPosts trigger={this.state.trigger} filterby={this.state.filterby} filterSelector={this.state.selector}/>
+        <AllPosts filterby={this.state.filterby} filterSelector={this.state.selector}/>
       </div>
     );
   }

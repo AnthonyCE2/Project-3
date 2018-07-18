@@ -6,7 +6,7 @@ import logo from './logo.svg';
 import AllPosts from './components/allposts/allposts';
 import LoginBox from './components/login/loginBox'
 import BlogPosts from './components/blogpost/blogpost';
-import OnePost from './components/onepost/onepost';
+// import OnePost from './components/onepost/onepost';
 import SomeMenus from './components/menus/menus';
 import MakePostButton from './components/makepost/makepostbutton';
 import './App.css';
@@ -34,7 +34,7 @@ class App extends Component {
           <MakePostButton loginStatus={true}/>
 
           <SomeMenus />
-          <AllPosts />
+          {/* <AllPosts /> */}
           {/* <BlogPosts /> */}
           {/* <OnePost postID={3} /> */}
         </div>

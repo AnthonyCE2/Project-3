@@ -77,25 +77,30 @@ class LoginBox extends Component {
 
   logout(event) {
     event.preventDefault();
-    // console.log(event.target.value);
+    // alert(event.target.value);
     if(event.target.value == 'Register') {
+      $("#registerBtnTxt").val('Logout');
       window.location.href = "Login.html"
       // window.location.href = "http://www.google.com"
-    } else if (event.target.value == 'Logout') {
+    } else  {
+      // if (event.target.value == 'Logout')
+    alert(event.target.value);
+
       $("#loginForm").show();
       $("#registerBtnTxt").html('Register');
+      $("#registerBtnTxt").val('Register')
       $("#loginLabel").text("Sign In Or Register");
       
-      $.get("/api/loginStatus", function(req, res) {
-        console.log(res);
-      })
-      $.get("/api/logout", (req, res) => {
-        console.log("after calling /api/logout", req, res)
+      // $.get("/api/loginStatus", function(req, res) {
+      //   console.log(res);
+      // })
+      // $.get("/api/logout", (req, res) => {
+      //   console.log("after calling /api/logout", req, res)
         
-        $.get("/api/loginStatus", function(req, res) {
-          console.log(res);
-        })
-      })
+      //   $.get("/api/loginStatus", function(req, res) {
+      //     console.log(res);
+      //   })
+      // })
       }
     }
   
@@ -119,27 +124,3 @@ class LoginBox extends Component {
 }
 
 export default LoginBox;
-
-
-
-
-// function updatePage() {
-    //   $.get("/api/home", function (dataIn) {
-    //     var theUser = dataIn[0];
-    //     var data = dataIn[1];
-    //     if (theUser.user) {
-    //       // logged in ...
-    //       // $("#loginLabel").text("Welcome " + theUser.user);
-    //       $("#loginForm").hide();
-    //       // $("#hideRegisterForm").hide();
-    //       $("#registerBtnTxt").text('Log Out');
-    //       $("#registerBtn").val('logout');
-    //     } else {
-    //       // not logged in
-    //       $("#loginForm").show();
-    //       $("#hideRegisterForm").show();
-    //       $("#registerBtnTxt").text('Log In');
-    //       // $("#registerBtn").prop('value', 'login');
-    //     }
-    //   });
-    // }
