@@ -2,9 +2,9 @@ TODO
 enable mailform
 styling
 fix "all" on posts
-fix menu on narrow screen
+fix menu on narrow screen -- DONE!
 more dummy posts into database.  
 validation
-fix damn logout button.
+fix damn logout button
 excessive calls to render?????
 upload on heroku
