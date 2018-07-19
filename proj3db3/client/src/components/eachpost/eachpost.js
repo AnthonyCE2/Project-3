@@ -8,15 +8,18 @@ class EachPost extends Component {
   }
 
   render() {
+    // console.log(this.props);
     return (
       <li className="Post"> 
-        <form>
-          User: <input type='text' placeholder={this.props.post.user.displayName} readonly/><br/>
-          Company: <input type='text' placeholder={this.props.post.companyloc.companyName} readonly/><br/>
-          Location: <input type='text' placeholder={this.props.post.companyloc.location} readonly/><br/>
-          Job: <input type='text' placeholder={this.props.post.job.jobTitle} readonly/><br/>
-          <divX>Question: <input className='question' type='text' placeholder={this.props.post.textOfPost} readonly/></divX><br/>
-          Reasoning: <input className='reasoning' type='text' placeholder={this.props.post.reason} readonly/><br/>
+        <form className = "displayForm">
+          <div id="shorterText">
+          <div class="lineWrapper topRow "> <p class="qanda topRowqanda ">User: </p><input id="userBox" className="softcorner"  type='text' placeholder={this.props.post.displayName} readonly/></div>
+          <div class="lineWrapper topRow "> <p class="qanda topRowqanda ">Company: </p><input id="companyBox" className="softcorner" type='text'  placeholder={this.props.post.companyName} readonly/> </div>
+          <div class="lineWrapper topRow "> <p class="qanda topRowqanda ">Location: </p><input id="locBox" className="softcorner" type='text'  placeholder={this.props.post.location} readonly/> </div>
+          <div class="lineWrapper topRow "> <p class="qanda topRowqanda ">Job: </p><input id="jobBox" className="softcorner" type='text'  placeholder={this.props.post.jobTitle} readonly/><br/> </div>
+          </div>
+          <div class="longerText"> <divX><p class="qanda"> Question: </p><textarea className='question softcorner' type='text' placeholder={this.props.post.textOfPost} readonly/></divX><br/> </div>
+          <div class="longerText"> <p class="qanda">Reasoning: </p><textarea className='reasoning softcorner' type='text' placeholder={this.props.post.reason} readonly/><br/> </div>
         </form>
         {/* <a href="#" onClick={this.deleteProject.bind(this, this.props.project.id)}>&nbsp;&nbsp;remove</a> */}
       </li>

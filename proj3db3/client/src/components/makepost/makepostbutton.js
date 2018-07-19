@@ -14,14 +14,10 @@ class MakePostButton extends Component {
   render() {
     if (this.props.loginStatus){
     return (
-     <div>
-       <button id="makepost" onClick={this.loadPostPage}>Make a Post</button>
-     </div>
+     <div id="makePostBtnHolder" class="login"><button id="makepost"  class="login" onClick={this.loadPostPage}>Make a Post</button></div>
     );} else
     return (
-      <div>
-        <h2>You must Sign In to Post</h2>
-      </div>
+      <div><h2>You must Sign In to Post</h2></div>
     )
   }
 }

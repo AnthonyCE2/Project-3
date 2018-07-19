@@ -1,3 +1,13 @@
+body {
+  background-color: #AAA;
+  background-image: url('./img/mainbackground.jpg');
+  font-size: 75%;
+}
+
+footer {
+  text-align: center;
+}
+
 .App {
   text-align: center;
 }
@@ -26,3 +36,176 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#loginLabel, #loginLabel1 {
+  display: inline-block;
+  /* color: green; */
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  /* margin: 0 10px;  */
+  margin-right: -15px;
+  margin-left: 10px;
+}
+
+#loginBoxHolder {
+  text-align: left;
+}
+
+#loginBoxHolder input[type=submit] {
+  color: white;
+  background-color: green;
+  font-size: 0.8em;
+  padding: 5px;
+  border: none;
+}
+
+#registerBtn {
+  color: white;
+  background-color: blue;
+  /* font-size: 0.8em; */
+  padding: 5px;
+  border: none;
+  float: right;
+  font-size: 10pt;
+  display: inline-block;
+}
+
+#registerBtnHolder {
+  float: right;
+  font-size: 10pt;
+  display: inline-block;
+  text-align:right;
+}
+
+
+#loginForm {
+  display: inline-block;
+}
+
+
+#loginUserName, #loginUserpwd {
+  /* border: none; */
+  font-size: 1rem;
+  margin: 0 10px 0 0;
+
+}
+
+#makePostBtnHolder {
+  display: inline;
+  float: right;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+}
+
+#makepost {
+  color: white;
+  background-color: blue;
+  padding: 5px; 
+  font-size: 10pt;
+  float: left;
+}
+
+
+.login {
+  text-align: left;
+  font-size: 1rem;
+  padding: 0px;
+  margin: 0 5px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+#postsDisplayed {
+  text-align: left;
+}
+
+.reasoning, .question {
+  width: 100%;
+  height: 70px;
+  word-wrap: break-word;
+ border: 1px black solid;
+}
+
+.softcorner {
+  border-radius: 5px;
+  /* width: 70%; */
+}
+
+.longerText {
+  width: 100%;
+  position: relative;
+}
+
+#userBox, #jobBox, #companyBox, #locBox {
+  /* width: 150px; */
+  width: 70%;
+  display: inline-block;
+  /* color: yellow; */
+}
+/* #userBox {
+  
+} */
+
+.displayForm {
+  border: 4px black double;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.lineWrapper {
+  display: inline-block;
+  width: 25%;
+}
+
+.qanda {
+  /* width: 120px; */
+  /* width: 10%; */
+  /* color: red; */
+  display: inline-block;
+  /* width: 20%; */
+  text-align: right;
+  padding: 0;
+  margin: 5px 0px;
+  padding-right: 5px;
+}
+
+.topRowquanda {
+  width: 25%;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  margin: 0 25px;
+}
+
+#loginBoxHolder {
+  text-align: left;
+  
+}
+
+#FilterMenus {
+  /* display: inline-block; */
+  text-align: left;
+}
+
+#mainMenu {
+  display: inline-block;
+  text-align: right;
+  padding-left: 10px;
+}
+
+#filterChosen {
+  display: inline-block;
+}
+
+#secondMenu {
+  display: inline-block;
+}
+

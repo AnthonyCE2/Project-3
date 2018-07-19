@@ -49,8 +49,8 @@ class LoginBox extends Component {
       })
     }
 
-    var loginEmail = $("#userName");
-    var loginPW = $("#userpwd");
+    var loginEmail = $("#loginUserName");
+    var loginPW = $("#loginUserpwd");
     var userData = {
       email: loginEmail.val(),
       password: loginPW.val()
@@ -71,8 +71,6 @@ class LoginBox extends Component {
     
     window.location = window.location.href + "#refresh";
     // // window.location.reload();
-
-    
   };
 
   logout(event) {
@@ -91,6 +89,33 @@ class LoginBox extends Component {
       $("#registerBtnTxt").val('Register')
       $("#loginLabel").text("Sign In Or Register");
       
+      // cut 94-01
+      
+      }
+    }
+  
+
+  render() {
+    // console.log(this.state);
+    return (
+     <div id="loginBoxHolder">
+      <form id="loginForm" class="login" onSubmit={this.login} >
+        <div id="loginForm" class="login">
+        <input id='loginUserName' class="login" type='text' placeholder='user name' />
+        <input id="loginUserpwd" class="login" type='password' placeholder='password' />
+        <input type='submit' class="login" value='Sign In' /></div>
+      </form>
+     <div id="registerBtnHolder"><button class="login" id="registerBtn" type='register' value ='Register' label="Click to Register" onClick={evt => (this.logout(evt))}>Click to Register</button></div>
+     </div>
+
+    );
+  }
+}
+
+export default LoginBox;
+
+
+// cut 94-01
       // $.get("/api/loginStatus", function(req, res) {
       //   console.log(res);
       // })
@@ -101,26 +126,3 @@ class LoginBox extends Component {
       //     console.log(res);
       //   })
       // })
-      }
-    }
-  
-
-  render() {
-    // console.log(this.state);
-    return (
-     <div><h3 id="loginLabel">Sign In Or Register</h3>
-     {/* <form action={this.login} > */}
-     <form onSubmit={this.login} >
-      <div id="loginForm"><input id='userName' type='text' placeholder='user name' />
-      <input id="userpwd" type='password' placeholder='password' />
-      <input type='submit' value='Sign In' /></div>
-     </form>
-     <button id="registerBtn" type='register' value ='Register' label="Register" onClick={evt => (this.logout(evt))}>Click to Register</button>
-     {/* evt => (this.logout(evt)) */}
-     </div>
-
-    );
-  }
-}
-
-export default LoginBox;

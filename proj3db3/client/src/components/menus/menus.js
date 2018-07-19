@@ -8,7 +8,7 @@ import AllPosts from '../allposts/allposts';
 import $ from 'jquery'
 // import uuid from 'uuid';
 
-class SomeMenus extends Component {
+class FilterMenus extends Component {
   constructor() {
     super();
     this.state = {
@@ -226,10 +226,8 @@ class SomeMenus extends Component {
   render() {
     let categoryOptions;
     return (
-
-      <div id="someMenus">
-        <div>
-          <p></p>
+      <div id="FilterMenus">
+        <div id="mainMenu">
           <label>Filter Posts By:&nbsp;&nbsp;</label>
           <select id="filterChoice" ref="filter" onChange={this.filterSelect}>
             <option value='None'>All</option>
@@ -250,9 +248,9 @@ class SomeMenus extends Component {
   }
 }
 
-SomeMenus.propTypes = {
+FilterMenus.propTypes = {
   categories: PropTypes.array,
   addProject: PropTypes.func
 }
 
-export default SomeMenus;
+export default FilterMenus;

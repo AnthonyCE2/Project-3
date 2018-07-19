@@ -8,14 +8,23 @@ module.exports = function (sequelize, DataTypes) {
     userID: {
       type: DataTypes.INTEGER
     },
+    displayName: {
+      type: DataTypes.STRING
+    },
     companyID: {
       type: DataTypes.INTEGER
+    },
+    companyName: {
+      type: DataTypes.STRING
     },
     location: {
       type : DataTypes.STRING
     },
     jobID: {
       type: DataTypes.INTEGER
+    },
+    jobTitle: {
+      type: DataTypes.STRING
     },
     keepAnonymous: {
       type: DataTypes.BOOLEAN

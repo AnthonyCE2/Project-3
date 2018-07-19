@@ -35,9 +35,9 @@ module.exports = function (app) {
 
   app.get("/blogPost/all", function (req, res) {
     db.posts.findAll({
-      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc}]
+      // include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc}]
     }).then((data) => {
-      // console.log(data[0].dataValues);
+      console.log("all post data is\n", data[0].dataValues);
       res.send(data)
     }).catch(error => {console.log(error)})
   });
@@ -57,10 +57,11 @@ module.exports = function (app) {
  
   app.get("/blogPost/user/:ID", function (req, res) {
     db.posts.findAll({
-      include: [{model: db.jobs}, {model: db.users, 
+      // include: [{model: db.jobs}, {model: db.users, 
         where: {
           displayName: req.params.ID
-        }}, {model: db.companyloc}]
+        }
+      // }, {model: db.companyloc}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -68,11 +69,13 @@ module.exports = function (app) {
   });
 
   app.get("/blogPost/company/:ID", function (req, res) {
+    console.log("looking for company")
     db.posts.findAll({
-      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
+      // include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
         where: {
           companyName: req.params.ID
-        }}]
+        }
+      // }]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -81,10 +84,11 @@ module.exports = function (app) {
 
   app.get("/blogPost/job/:ID", function (req, res) {
     db.posts.findAll({
-      include: [{ model: db.jobs, 
+      // include: [{ model: db.jobs, 
         where: {
           jobTitle: req.params.ID
-        }}, {model: db.users}, {model: db.companyloc}]
+        }
+      // }, {model: db.users}, {model: db.companyloc}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -93,10 +97,11 @@ module.exports = function (app) {
 
   app.get("/blogPost/location/:location", function (req, res) {
     db.posts.findAll({
-      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
+      // include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
         where: {
           location: req.params.location
-        }}]
+        }
+    //}]
     }).then((data) => {
       // console.log(data);
       res.send(data)
@@ -105,11 +110,12 @@ module.exports = function (app) {
 
   app.get("/blogPost/companyloc/:ID/:location", function (req, res) {
     db.posts.findAll({
-      include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
+      // include: [{ model: db.jobs}, {model: db.users}, {model: db.companyloc, 
         where: {
           companyName: req.params.ID,
           location: req.params.location
-        }}]
+        }
+      // }]
     }).then((data) => {
       // console.log("data is ", data);
       res.send(data)
@@ -184,60 +190,84 @@ module.exports = function (app) {
   });
 
   app.post("/addpost", function (req, res) {
+    console.log("addpost called")
+    console.log("addpost req.body is\n", req.body);
     var datacompanyID;
     var found = 1;
     // TODO add validation
     // console.log("in addpost route");
-    // console.log("req.body is", req.body);
+    // console.log("addpost req.body is", req.body);
     req.body.keepAnon = req.body.keepAnon ? true : false
-    
-    // console.log("req.body is", req.body, "\n----------");
-    getCompanyInfo(req.body.companyName, req.body.location,  (results) => {
-      // console.log(results)
-      if (results.length == 0) {
-        found = -1;
-      }
-      if (found != -1) {
-        console.log(results[0].dataValues)
-        datacompanyID = results[0].dataValues.companyID
-        db.posts.create({
-          companyID: datacompanyID,
-          location: req.body.location,
-          jobID: req.body.job,
-          textOfPost: req.body.textOfPost,
-          reason: req.body.reason
-        });
-      } else {
-        // WE HAVE AN ERROR
-        // need to get a new location
-      }
-    }); {
-      // see way below....
-
-    }
-  });
-
-  function getCompanyInfo(name, location, cb) {
-    // console.log("got to function")
-    db.companyloc.findAll({
-      where: {
-        companyName: name,
-        location: location
-      }
-    }).then(data => {
-      // console.log(data);
-      if (data != null) {
-        // console.log("-------------------------------");
-        // console.log(data.length);
-        // console.log("-------------------------------");
-        return cb(data)
-      } else {
-        // console.log("nothing came back");
-        // res.redirect("/");
-        return cb([]);
-      }
+    db.posts.create({
+      companyID: 5,
+      companyName: req.body.company,
+      location: req.body.location,
+      jobID: 5,
+      jobTitle: req.body.job,
+      userID: 5,
+      displayName: "NewUserPost",
+      // req.body.job,
+      textOfPost: req.body.textOfPost,
+      reason: req.body.reason
     })
-  }
+    .then( x => {
+      console.log("came back");
+      res.send();
+      // res.sendFile("./index.html");
+      // location.href("index.html")
+    }
+    );
+
+
+    // console.log("req.body is", req.body, "\n----------");
+    // getCompanyInfo(req.body.company, req.body.location,  req.body.job, (results) => {
+    //   console.log("\ngetcompany info returns \n", results)
+    //   if (results.length == 0) {
+    //     found = -1;
+    //   }
+    //   if (found != -1) {
+    //     console.log('results are \n', results[0].dataValues)
+    //     datacompanyID = results[0].dataValues.companyID
+    //     db.posts.create({
+    //       companyID: datacompanyID,
+    //       location: req.body.location,
+    //       jobID: 3,
+    //       userID: 0,
+    //       // req.body.job,
+    //       textOfPost: req.body.textOfPost,
+    //       reason: req.body.reason
+    //     });
+    //   } else {
+        
+    //   }
+    }); 
+    // {
+    //   // see way below....
+
+    // }
+  // });
+
+  // function getCompanyInfo(name, location, job, cb) {
+  //   console.log("got to function name: ", name)
+  //   db.companyloc.findAll({
+  //     where: {
+  //       companyName: name,
+  //       location: location
+  //     }
+  //   }).then(data => {
+  //     console.log("get company info data is >>\n", data);
+  //     if (data != null) {
+  //       // console.log("-------------------------------");
+  //       // console.log(data.length);
+  //       // console.log("-------------------------------");
+  //       return cb(data)
+  //     } else {
+  //       // console.log("nothing came back");
+  //       // res.redirect("/");
+  //       return cb([]);
+  //     }
+  //   })
+  // }
 
   app.get("/api/companyInfofromName/:name", function (req, res) {
     const name = req.params.name;
