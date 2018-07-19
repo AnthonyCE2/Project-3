@@ -8,7 +8,7 @@ class LoginBox extends Component {
   constructor() {
     super();
     this.state = {
-      customer: ''
+      // customer: ''
     }
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
@@ -106,7 +106,7 @@ class LoginBox extends Component {
   
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
      <div><h3 id="loginLabel">Sign In Or Register</h3>
      {/* <form action={this.login} > */}
