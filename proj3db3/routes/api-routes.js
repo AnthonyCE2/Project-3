@@ -251,26 +251,11 @@ module.exports = function (app) {
 
   // LOGIN/REGISTRATION RELATED ROUTES ------------------------------------
   app.post("/api/signup", function (req, res) {
-    console.log("in api/signup", req.body)
+    console.log("in api/signup!! req.body is", req)
     db.users.create({
       email0: req.body.email0,
-      password: req.body.password,
-      FirstName: req.body.FirstName,
-      LastName: req.body.LastName,
-      displayName: req.body.displayName,
-      showEmails: req.body.showEmails,
-      email1: req.body.email1,
-      telno: req.body.telno,
-      showTelno: req.body.showTelno,
-      address1: req.body.address1,
-      address2: req.body.address2,
-      showStreet: req.body.showStreet,
-      city: req.body.city,
-      showCity: req.body.showCity,
-      state: req.body.state,
-      showState: req.body.showState,
-      zip: req.body.zip,
-      showZip: req.body.showZip
+      password: req.body.userPassword0,
+      // cut 01.258
     }).then(function (data) {
       // res.redirect(307, "/api/login");
       // db.user.loginUser(data.email0, data.password);
@@ -280,14 +265,13 @@ module.exports = function (app) {
       res.json(err);
       // res.status(422).json(err.errors[0].message);
     });
-
     // todo: add error checking
   });
 
   app.post("/api/login",
     passport.authenticate("local"),
     function (req, res, third) {
-      // console.log(req, res, third);
+      console.log(req, res, third);
       // we never get here when authentication fails.....
       res.redirect('/');
       res.end();
@@ -335,3 +319,21 @@ module.exports = function (app) {
   });
 };
 
+
+// cut 01.258
+// FirstName: req.body.FirstName,
+      // LastName: req.body.LastName,
+      // displayName: req.body.displayName,
+      // showEmails: req.body.showEmails,
+      // email1: req.body.email1,
+      // telno: req.body.telno,
+      // showTelno: req.body.showTelno,
+      // address1: req.body.address1,
+      // address2: req.body.address2,
+      // showStreet: req.body.showStreet,
+      // city: req.body.city,
+      // showCity: req.body.showCity,
+      // state: req.body.state,
+      // showState: req.body.showState,
+      // zip: req.body.zip,
+      // showZip: req.body.showZip

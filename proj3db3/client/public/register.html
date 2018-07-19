@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>InterVw.Me</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="css/clean-blog.min.css" rel="stylesheet">
+  <!-- <script src="scripts/register.js"></script> -->
+</head>
+
+<script>
+  $.get('api/home');
+</script>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <!-- <a class="navbar-brand" href="index.html">Start Bootstrap</a> -->
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('img/blog.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="page-heading">
+            <h1>Please Register.</h1>
+            <span class="subheading">Share your experience!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h4 style="padding: 10px; margin: 10px">Complete the form below to register</h4>
+        <div id="registerLabel"></div>
+        <!-- <form id="registerForm" name="register" value="Register" action="/api/signup" method='POST'> -->
+        <!-- <form id="registerForm" name="register" value="Register" onsubmit="yellow()" > -->
+        <form id="registerForm" name="register" value="Register" onSubmit="yellow()">
+          <input id="displayName" name="displayName" type="text" placeholder="Select user name">
+          <br>
+          <input id="email0" name="email0" type="text" placeholder="Your email">
+          <br>
+          <input id="showEmail" name="showEmail" type="checkbox" value="0">Show email in post?
+          <br>
+          <br>
+
+          <input id="userPassword0" name="userPassword0" type="password" placeholder="Create a password">
+          <br>
+          <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm password">
+          <br>
+          <br>
+          <!-- <button id='registerBtn' type="button" value="register" class="btn btn-primary">
+                <span id="registerBtnTxt">Register</span>
+              </button> -->
+          <input type="submit" value="Register" class="btn btn-primary">
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+
+  <!-- Script to Link to Database -->
+  <!-- <script type="text/javascript" src="scripts/login.js"></script> -->
+  <script>
+    function yellow() {
+      event.preventDefault();
+
+      var email0 = $("#email0").val();
+      var userPassword0 = $("#userPassword0").val();
+      var displayName = $("#displayName").val();
+      // console.log("name, email, password are ", displayName, email0, userPassword0)
+      var userData = {
+        email0: email0,
+        userPassword0: userPassword0,
+        displayName: displayName,
+      };
+      if (!userData.email0 || !userData.userPassword0) {
+        $("#registerLabel").css("color", "red");
+        $("#registerLabel").css("font-size", "2.5emn");
+        $("#registerLabel").css("font-family", "sans-serif");
+        $("#registerLabel").text("You entered a blank as username, email or password.  You must inclue these!");
+        return;
+      }
+      console.log("userData is ", userData)
+      signUpUser(userData);
+    }
+
+    function signUpUser(userData) {
+      // console.log("name, email, password are ", userData.displayName, userData.email0, userData.userPassword0)
+      // console.log("type of userData.userPassword0 ", typeof userData.userPassword0)
+      // function signUpUser(userData) {
+      $.post("/api/signup", {
+        email0: userData.email0,
+        userPassword0: userData.userPassword0,
+        displayName: userData.displayName
+      }).then(function (data) {
+        // console.log("data is", data, "\n-----------\n", "userData is ", userData);
+        loginUser(userData.email0, userData.userPassword0);
+      });
+    }
+
+
+    function loginUser(email, password) {
+      console.log(email, password)
+      $.get("/api/login", {
+        email,
+        password
+      }, function (data) {
+        // window.location.replace(data);
+        window.location.href("index.html");
+        // reload();
+        // $("#loginLabel").text("Incorrect User Name or Password.  Please try again or register");
+        // If there's an error, handle it by throwing up a bootstrap alert
+      });
+    }
+
+    //         function handleLoginErr(err) {
+    //           $("#alert .msg").text(err.responseJSON);
+    //           $("#alert").fadeIn(500);
+    //         };
+  </script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js"></script>
+</body>
+
+</html>
+
+<script>
+  //         
+  //         $(document).on("click", "#registerBtn", function () {
+  //             // $("form").submit(function () {
+  //             event.preventDefault();
+  //             alert("submitting!!!!!");
+  //             // register new user
+  //             /*
+  //             if ($("#registerBtn").val() == 'register') {
+  //               var email0 = $("#email0").val() ;
+  //               var registerPW = $("#userPassword0").val() ;
+  //               var showEmail = $("#showEmail").val() ;
+  //               var userPassword0 = $("#userPassword0").val() ;
+  //               var confirmPassword = $("#confirmPassword").val() ;
+  //               var email1 = $("#email1").val() ;
+  //               var telno = $("#telno").val() ;
+  //               var showTelno = $("#showTelno").val() ;
+  //               var address1 = $("#address1").val() ;
+  //               var adress2 = $("#adress2").val() ;
+  //               var showStreet = $("#showStreet").val() ;
+  //               var city = $("#city").val() ;
+  //               var showCity = $("#showCity").val() ;
+  //               var state = $("#state").val() ;
+  //               var showState = $("#showState").val() ;
+  //               var zip = $("#zip").val() ;
+  //               var showZip = $("#showZip").val() ;
+  //               var userData = {
+  //                 email0: email0,
+  //                 password: registerPW,
+  //                 displayName: displayName,
+  //                 showEmail: showEmail,
+  //                 userPassword0: userPassword0,
+  //                 confirmPassword: confirmPassword,
+  //                 email1: email1,
+  //                 telno: telno,
+  //                 showTelno: showTelno,
+  //                 address1: address1,
+  //                 adress2: adress2,
+  //                 showStreet: showStreet,
+  //                 city: city,
+  //                 showCity: showCity,
+  //                 state: state,
+  //                 showState: showState,
+  //                 zip: zip,
+  //                 showZip: showZip,
+  //               };
+  //               */
+  //           }
+
+  //           // // log out a logged in user
+  //           // else if ($("#registerBtn").val() == 'logout') {
+  //           //   $.ajax({
+  //           //     url: "/logout",
+  //           //     method: 'GET',
+  //           //     success: function () {
+  //           //       $("#loginForm").show();
+  //           //       $("#hideRegisterForm").show();
+  //           //       $("#registerBtnTxt").text('Register');
+  //           //       $("#newThreadBox").hide();
+  //           //       // window.location = window.location.href + "#refresh";
+  //           //       window.location.reload();
+  //           //     }
+  //           //   });
+  //           // }
+  //         );
+</script>
+
+<!-- <li class="nav-item">
+                <a class="nav-link" href="Login.html">Login</a>
+              </li> -->

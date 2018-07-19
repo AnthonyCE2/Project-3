@@ -80,7 +80,7 @@ class LoginBox extends Component {
     // alert(event.target.value);
     if(event.target.value == 'Register') {
       $("#registerBtnTxt").val('Logout');
-      window.location.href = "Login.html"
+      window.location.href = "register.html"
       // window.location.href = "http://www.google.com"
     } else  {
       // if (event.target.value == 'Logout')
